@@ -63,7 +63,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <a href="{{ route('admin.doctors_list') }}" class="btn btn-secondary">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Update  Doctor</button>
+                            <button type="submit" class="btn btn-primary">Update Doctor</button>
                         </div>
                     </form>
                 </div>
