@@ -54,9 +54,23 @@ class AdminController extends Controller
             $doctor = Doctor::find($id);
             $doctor->update($request->all());
             return redirect()->route('admin.doctors_list')->with('success', 'Updated successfully');
-    } catch (\Exception $e) {
-        Log::error('Profile update error: ' . $e->getMessage());
-        return redirect()->back()->withInput()->with('error', 'There was an error updating the doctor.');
+        } catch (\Exception $e) {
+            Log::error('Profile update error: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'There was an error updating the doctor.');
+        }
     }
-}
+
+    public function updateUser(Request $request, $id)
+    {
+        try {
+            $user = User::find($id);
+            $user->update($request->all());
+            return redirect()->route('admin.users_list')->with('success', 'Updated successfully');
+        } catch (\Exception $e) {
+            Log::error('Profile update error: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'There was an error updating the user.');
+        }
+    }
+
+    
 }

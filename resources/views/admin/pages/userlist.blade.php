@@ -1,10 +1,5 @@
 @extends('layouts.admin_layout')
 @section('content')
-{{-- @if(isset($editUser) && $editUser)
-
-
-@else --}}
-<p>Hello  wolrd</p>
 <div class="container-fluid py-2">
   <div class="row">
     <div class="col-12">
@@ -105,5 +100,4 @@
     </div>
   </footer>
 </div>
-{{-- @endif --}}
 @endsection

@@ -39,7 +39,8 @@ Route::prefix('/admin')->middleware(['auth:web', \App\Http\Middleware\CheckRole:
     Route::get('/userlist', [AdminController::class, 'UserList'])->name('admin.users_list');
     Route::get('/doctorlist', [AdminController::class, 'DoctorList'])->name('admin.doctors_list');
     Route::get('/appointment', [AdminController::class, 'Appointment'])->name('admin.appointment');
-    Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+    Route::get('/users/{id}', [AdminController::class, 'editUser'])->name('admin.users.edit');
+    Route::put('/users/{id}/edit', [AdminController::class, 'updateUser'])->name('admin.users.update');
     Route::get('/doctors/{id}/edit', [AdminController::class, 'editDoctor'])->name('admin.doctors.edit');
     Route::put('/doctors/{id}', [AdminController::class, 'updateDoctor'])->name('admin.doctors.update');
     // Admin Appointment Routes

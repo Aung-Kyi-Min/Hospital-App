@@ -12,7 +12,7 @@
                         <h4 class="mb-0">Edit User</h4>
                     </div>
                     <div class="card-body p-4">
-                        <form action="" method="POST" enctype="multipart/form-data" autocomplete="off">
+                        <form action="{{ route('admin.users.update', $editUser->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
                             @csrf
                             @method('PUT')
                             <div class="row g-4 align-items-center mb-4">
@@ -66,12 +66,8 @@
                             </div>
                             <hr class="my-4">
                             <div class="d-flex justify-content-between">
-                                <a href="{{ route('admin.users_list') }}" class="btn btn-outline-secondary px-4 py-2 rounded-pill shadow-sm">
-                                    <i class="fa fa-arrow-left me-1"></i> Cancel
-                                </a>
-                                <button type="submit" class="btn btn-primary bg-gradient-primary px-5 py-2 rounded-pill shadow-sm">
-                                    <i class="fa fa-save me-2"></i>Update User
-                                </button>
+                                <a href="{{ route('admin.users_list') }}" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Update User</button>
                             </div>
                         </form>
                     </div>
