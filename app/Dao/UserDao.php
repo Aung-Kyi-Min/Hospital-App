@@ -60,6 +60,8 @@ class UserDao implements UserDaoInterface
         $user->image = $data['image'] ?? $user->image;
         $user->address = $data['address'];
         $user->gender = $data['gender'];
+        $user->disease_description = $data['disease_description'];
+        $user->blood_type = $data['blood_type'];
         $user->phone = $data['phone'];
         $user->save();
     }

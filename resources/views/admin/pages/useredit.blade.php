@@ -55,7 +55,16 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="blood_type" class="form-label">Blood Group</label>
-                                            <input type="text" class="form-control" id="blood_type" name="blood_type" value="{{ old('blood_type', $editUser->blood_type) }}">
+                                            <select class="form-select" id="blood_type" name="blood_type">
+                                                <option value="A+" {{ old('blood_type', $editUser->blood_type) == 'A+' ? 'selected' : '' }}>A+</option>
+                                                <option value="A-" {{ old('blood_type', $editUser->blood_type) == 'A-' ? 'selected' : '' }}>A-</option>
+                                                <option value="B+" {{ old('blood_type', $editUser->blood_type) == 'B+' ? 'selected' : '' }}>B+</option>
+                                                <option value="B-" {{ old('blood_type', $editUser->blood_type) == 'B-' ? 'selected' : '' }}>B-</option>
+                                                <option value="AB+" {{ old('blood_type', $editUser->blood_type) == 'AB+' ? 'selected' : '' }}>AB+</option>
+                                                <option value="AB-" {{ old('blood_type', $editUser->blood_type) == 'AB-' ? 'selected' : '' }}>AB-</option>
+                                                <option value="O+" {{ old('blood_type', $editUser->blood_type) == 'O+' ? 'selected' : '' }}>O+</option>
+                                                <option value="O-" {{ old('blood_type', $editUser->blood_type) == 'O-' ? 'selected' : '' }}>O-</option>
+                                            </select>
                                         </div>
                                         <div class="col-12">
                                             <label for="disease_description" class="form-label">Disease Description</label>

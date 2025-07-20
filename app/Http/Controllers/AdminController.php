@@ -7,8 +7,24 @@ use App\Models\User;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Contracts\Services\UserServiceInterface;
+use App\Http\Requests\AdminUserEditRequest;
+
 class AdminController extends Controller
 {
+    private $userService;
+ 
+    /**
+      * Create a new controller instance.
+      * @param userInterface $taskServiceInterface
+      * @return void
+      */
+ 
+    public function __construct(UserServiceInterface $userServiceInterface) 
+    {
+       $this->userService = $userServiceInterface;
+    }
+
     public function index()
     {
         return view('admin.pages.index');
@@ -60,15 +76,49 @@ class AdminController extends Controller
         }
     }
 
-    public function updateUser(Request $request, $id)
+    // public function updateUser(Request $request, $id)
+    // {
+    //     try {
+    //         $user = User::find($id);
+    //         $user->update($request->all());
+    //         return redirect()->route('admin.users_list')->with('success', 'Updated successfully');
+    //     } catch (\Exception $e) {
+    //         Log::error('Profile update error: ' . $e->getMessage());
+    //         return redirect()->back()->withInput()->with('error', 'There was an error updating the user.');
+    //     }
+    // }
+
+    public function updateUser(AdminUserEditRequest $request, $id)        
     {
         try {
-            $user = User::find($id);
-            $user->update($request->all());
-            return redirect()->route('admin.users_list')->with('success', 'Updated successfully');
+            $validatedData = $request->validated();
+            $updateData = [
+                'username' => $validatedData['username'],
+                'address' => $validatedData['address'],
+                'gender' => $validatedData['gender'],
+                'phone' => $validatedData['phone'],
+                'disease_description' => $validatedData['disease_description'],
+                'blood_type' => $validatedData['blood_type']
+            ];
+
+            if (isset($validatedData['image'])) {
+                $path = public_path('images/user');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+
+                $image = $validatedData['image'];
+                $imageName = $image->getClientOriginalName();
+                $image->move($path, $imageName);
+                $updateData['image'] = $imageName;
+            }
+
+            $this->userService->update($id, $updateData);
+
+            return redirect()->route('admin.users_list')->with('success', 'User updated successfully');
         } catch (\Exception $e) {
-            Log::error('Profile update error: ' . $e->getMessage());
-            return redirect()->back()->withInput()->with('error', 'There was an error updating the user.');
+            Log::error('User update error: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'There was an error updating User.');
         }
     }
 
