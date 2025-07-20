@@ -1,38 +1,38 @@
 <?php
 
-namespace App\Contracts\Dao;
+namespace App\Contracts\Services;
 
 /**
- * Interface of Data Access Object for task
- */
-interface UserDaoInterface
+ * Interface for Doctor service
+*/
+interface DoctorServiceInterface
 {
     /**
-     * Show User
+     * Show Doctor
      * @return object
     */
     public function get() : object;
 
     /**
-     * Store User
+     * Store Doctor
      * @return void
     */
     public function store() : void;
 
     /**
-     * Return Specific User
+     * Return Specific Doctor
      * @return object
     */
     public function edit($id) : object;
 
     /**
-     * Update User
+     * Update Doctor
      * @return void
     */
     public function update($id , array $data) : void;
 
      /**
-     * Destroy User
+     * Destroy Doctor
      * @return void 
     */
     public function destroy($id) : void;

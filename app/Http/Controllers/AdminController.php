@@ -9,10 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Contracts\Services\UserServiceInterface;
 use App\Http\Requests\AdminUserEditRequest;
+use App\Contracts\Services\DoctorServiceInterface;
+use App\Http\Requests\AdminDoctorEditRequest;
 
 class AdminController extends Controller
 {
     private $userService;
+    private $doctorService;
  
     /**
       * Create a new controller instance.
@@ -20,9 +23,10 @@ class AdminController extends Controller
       * @return void
       */
  
-    public function __construct(UserServiceInterface $userServiceInterface) 
+    public function __construct(UserServiceInterface $userServiceInterface, DoctorServiceInterface $doctorServiceInterface) 
     {
        $this->userService = $userServiceInterface;
+       $this->doctorService = $doctorServiceInterface;
     }
 
     public function index()
@@ -64,15 +68,52 @@ class AdminController extends Controller
         return view('admin.pages.doctoredit', compact('doctor'));
     }
 
-    public function updateDoctor(Request $request, $id)
+    // public function updateDoctor(Request $request, $id)
+    // {
+    //     try {
+    //         $doctor = Doctor::find($id);
+    //         $doctor->update($request->all());
+    //         return redirect()->route('admin.doctors_list')->with('success', 'Updated successfully');
+    //     } catch (\Exception $e) {
+    //         Log::error('Profile update error: ' . $e->getMessage());
+    //         return redirect()->back()->withInput()->with('error', 'There was an error updating the doctor.');
+    //     }
+    // }
+
+    public function updateDoctor(AdminDoctorEditRequest $request, $id)        
     {
         try {
-            $doctor = Doctor::find($id);
-            $doctor->update($request->all());
-            return redirect()->route('admin.doctors_list')->with('success', 'Updated successfully');
+            $validatedData = $request->validated();
+            $updateData = [
+                'doctor_name' => $validatedData['doctor_name'],
+                'email' => $validatedData['email'],
+                'specialization' => $validatedData['specialization'],
+                'phone' => $validatedData['phone'],
+                'status' => $validatedData['status'],
+                'bio' => $validatedData['bio'],
+                'qualification' => $validatedData['qualification'],
+                'experience' => $validatedData['experience'],
+                'availability' => $validatedData['availability']
+            ];
+
+            if (isset($validatedData['profile_image'])) {
+                $path = public_path('images/doctors');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }   
+
+                $image = $validatedData['profile_image'];
+                $imageName = $image->getClientOriginalName();
+                $image->move($path, $imageName);
+                $updateData['profile_image'] = $imageName;
+            }
+
+            $this->doctorService->update($id, $updateData);
+
+            return redirect()->route('admin.doctors_list')->with('success', 'Doctor updated successfully');
         } catch (\Exception $e) {
-            Log::error('Profile update error: ' . $e->getMessage());
-            return redirect()->back()->withInput()->with('error', 'There was an error updating the doctor.');
+            Log::error('Doctor update error: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'There was an error updating Doctor.');
         }
     }
 

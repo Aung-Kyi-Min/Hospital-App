@@ -33,11 +33,19 @@
                                         </div>
                                         <div class="col-md-6">
                                             <label for="specialization" class="form-label">Specialization</label>
-                                            <input type="text" class="form-control" id="specialization" name="specialization" value="{{ old('specialization', $doctor->specialization) }}">
+                                            <select class="form-select" id="specialization" name="specialization">
+                                                <option value="Cardiology" {{ old('specialization', $doctor->specialization) == 'Cardiology' ? 'selected' : '' }}>Cardiology</option>
+                                                <option value="Neurology" {{ old('specialization', $doctor->specialization) == 'Neurology' ? 'selected' : '' }}>Neurology</option>
+                                                <option value="Oncology" {{ old('specialization', $doctor->specialization) == 'Oncology' ? 'selected' : '' }}>Oncology</option>
+                                            </select>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="qualification" class="form-label">Qualification</label>
                                             <input type="text" class="form-control" id="qualification" name="qualification" value="{{ old('qualification', $doctor->qualification) }}">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="experience" class="form-label">Experience</label>
+                                            <input type="text" class="form-control" id="experience" name="experience" value="{{ old('experience', $doctor->experience) }}">
                                         </div>
                                         <div class="col-12">
                                             <label for="bio" class="form-label">Bio</label>

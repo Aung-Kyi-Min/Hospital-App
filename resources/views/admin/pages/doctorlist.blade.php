@@ -24,6 +24,7 @@
                 <th class="text-center text-uppercase text-secondary text-s font-weight-bolder ps-2" style="min-width: 150px; width: 150px;">Phone Number</th>
                 <th class="text-center text-uppercase text-secondary text-s font-weight-bolder ps-2" style="min-width: 370px; width: 370px;">Availability</th>
                 <th class="text-center text-uppercase text-secondary text-s font-weight-bolder" style="min-width: 220px; width: 220px;">Status</th>
+                <th class="text-center text-uppercase text-secondary text-s font-weight-bolder" style="min-width: 180px; width: 180px;">Experience</th>
                 <th class="text-center text-uppercase text-secondary text-s font-weight-bolder" style="min-width: 180px; width: 180px;">Action</th>
               </tr>
               </thead>
@@ -34,12 +35,19 @@
                   <td class="text-center" style="border: 1px solid #dee2e6;">
                     <div class="d-flex justify-content-center px-2 py-1">
                       <div>
+                        @if($doctor->profile_image != null)
+                          <img src="{{ asset("images/doctors/" . $doctor->profile_image) }}" class="rounded-circle doctor-profile_image" style="width: 60px; height: 60px; align-items: center;" name="profile_image" alt="{{ $doctor->doctor_name }}">
+                        @else
+                            <img src="{{ asset('images/doctors/default.jpeg') }}" name="profile_image" class="rounded-circle doctor-profile_image" style="width: 60px; height: 60px; align-items: center;" alt="doctor">
+                        @endif                      
+                      </div>
+                      {{-- <div>
                         @if($doctor->profile_image)
-                          <img src="{{ asset("images/doctors/" . $doctor->profile_image) }}" class="rounded-circle doctor-image" style="width: 140px; height: 140px; align-items: center;" name="image" alt="{{ $doctor->username }}">
+                          <img src="{{ asset("images/doctors/" . $doctor->profile_image) }}" class="rounded-circle doctor-image" style="width: 140px; height: 140px; align-items: center;" name="image" alt="{{ $doctor->doctor_name }}">
                         @else
                             <img src="../images/doctors/default.jpeg" name="image" class="rounded-circle doctor-image" style="width: 140px; height: 140px; align-items: center;" alt="Doctor">
                         @endif                      
-                      </div>
+                      </div> --}}
                     </div>
                   </td>
                   <td class="text-left" style="border: 1px solid #dee2e6;">{{ $doctor->doctor_name }}</td>
@@ -54,6 +62,7 @@
                   <td class="align-middle text-center text-md">
                     <span class="badge badge-md bg-gradient-{{ $doctor->status == 'active' ? 'success' : 'danger' }}">{{ ucfirst($doctor->status) }}</span>
                   </td>
+                  <td style="text-align: right; border: 1px solid #dee2e6;">{{ $doctor->experience }} yrs</td>
                   <td class="text-center" style="border: 1px solid #dee2e6;">
                     <a href="{{ route('admin.doctors.edit', $doctor->id) }}" class="text-success font-weight-bold text-xs pr-2" data-toggle="tooltip" data-original-title="Edit doctor">
                       <i class="fa fa-edit fa-2x" style="margin-right: 7px;"></i>
