@@ -65,7 +65,7 @@
                   <td style="text-align: right; border: 1px solid #dee2e6;">{{ $doctor->experience }} yrs</td>
                   <td class="text-center" style="border: 1px solid #dee2e6;">
                     <a href="{{ route('admin.doctors.edit', $doctor->id) }}" class="text-success font-weight-bold text-xs pr-2" data-toggle="tooltip" data-original-title="Edit doctor">
-                      <i class="fa fa-edit fa-2x" style="margin-right: 7px;"></i>
+                      <i class="fa fa-edit fa-3x" style="margin-right: 7px;"></i>
                     </a>
                     <form action="{{ route('admin.doctors.delete', $doctor->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this doctor?');">
                       @csrf
