@@ -163,5 +163,27 @@ class AdminController extends Controller
         }
     }
 
+    public function deleteUser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            return redirect()->route('admin.users_list')->with('success', 'User deleted successfully');
+        } catch (\Exception $e) {
+            Log::error('User delete error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'There was an error deleting the user.');
+        }
+    }
     
+    public function deleteDoctor($id)
+    {
+        try {
+            $doctor = Doctor::findOrFail($id);
+            $doctor->delete();
+            return redirect()->route('admin.doctors_list')->with('success', 'Doctor deleted successfully');
+        } catch (\Exception $e) {
+            Log::error('Doctor delete error: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'There was an error deleting the doctor.');
+        }
+    }
 }

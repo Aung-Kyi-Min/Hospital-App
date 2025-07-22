@@ -41,8 +41,10 @@ Route::prefix('/admin')->middleware(['auth:web', \App\Http\Middleware\CheckRole:
     Route::get('/appointment', [AdminController::class, 'Appointment'])->name('admin.appointment');
     Route::get('/users/{id}', [AdminController::class, 'editUser'])->name('admin.users.edit');
     Route::put('/users/{id}/edit', [AdminController::class, 'updateUser'])->name('admin.users.update');
+    Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     Route::get('/doctors/{id}/edit', [AdminController::class, 'editDoctor'])->name('admin.doctors.edit');
     Route::put('/doctors/{id}', [AdminController::class, 'updateDoctor'])->name('admin.doctors.update');
+    Route::delete('/doctors/{id}', [AdminController::class, 'deleteDoctor'])->name('admin.doctors.delete');
     // Admin Appointment Routes
     Route::get('/appointments/{appointment}/show', [AppointmentController::class, 'show'])->name('appointments.show');
     Route::post('/appointments/{appointment}/update-status', [AppointmentController::class, 'updateStatus'])
