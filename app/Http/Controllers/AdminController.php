@@ -186,4 +186,50 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'There was an error deleting the doctor.');
         }
     }
+
+    public function profile()
+    {
+        $admin = auth('web')->user();
+        return view('admin.pages.profile', compact('admin'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        try {
+            $admin = auth('web')->user();
+            
+            $request->validate([
+                'username' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $admin->id,
+                'phone' => 'nullable|string|max:20',
+                'address' => 'nullable|string|max:500',
+            ]);
+
+            $updateData = [
+                'username' => $request->username,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+            ];
+
+            if ($request->hasFile('image')) {
+                $path = public_path('images/user');
+                if (!file_exists($path)) {
+                    mkdir($path, 0777, true);
+                }
+
+                $image = $request->file('image');
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $image->move($path, $imageName);
+                $updateData['image'] = $imageName;
+            }
+
+            $admin->update($updateData);
+
+            return redirect()->route('admin.profile')->with('success', 'Profile updated successfully');
+        } catch (\Exception $e) {
+            Log::error('Admin profile update error: ' . $e->getMessage());
+            return redirect()->back()->withInput()->with('error', 'There was an error updating your profile.');
+        }
+    }
 }
