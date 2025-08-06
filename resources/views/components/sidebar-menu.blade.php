@@ -11,7 +11,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center {{ request()->routeIs('admin.users_list') || request()->routeIs('admin.doctors_list') ? 'active bg-gradient-dark text-dark' : 'text-gray' }}"
+                <a class="nav-link d-flex align-items-center {{ request()->routeIs('admin.users_list') || request()->routeIs('admin.doctors_list') ? 'active bg-gradient-dark text-dark' : 'text-dark' }}"
                    data-bs-toggle="collapse"
                    href="#tablesCollapse"
                    role="button"
@@ -29,7 +29,7 @@
                      id="tablesCollapse">
                     <ul class="nav flex-column ms-4 ps-3">
                         <li class="nav-item">
-                            <a class="nav-link btn {{ request()->routeIs('admin.users_list') ? 'btn-dark text-gray' : 'btn-dark text-dark' }}"
+                            <a class="nav-link btn {{ request()->routeIs('admin.users_list') ? 'btn-dark text-dark' : 'btn-dark text-dark' }}"
                                href="{{ route('admin.users_list') }}"
                                style="border-radius: 20px; padding: 10px 20px; transition: background-color 0.2s;">
                                 <div class="d-flex align-items-center">
@@ -39,7 +39,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn {{ request()->routeIs('admin.doctors_list') ? 'btn-dark text-gray' : 'btn-dark text-dark' }}"
+                            <a class="nav-link btn {{ request()->routeIs('admin.doctors_list') ? 'btn-dark text-dark' : 'btn-dark text-dark' }}"
                                href="{{ route('admin.doctors_list') }}"
                                style="border-radius: 20px; padding: 10px 20px; transition: background-color 0.2s;">
                                 <div class="d-flex align-items-center">
