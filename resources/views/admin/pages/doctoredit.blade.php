@@ -64,7 +64,10 @@
                                         </div>
                                         <div class="col-12">
                                             <label for="availability" class="form-label">Availability</label>
-                                            <input type="text" class="form-control" id="availability" name="availability" value="{{ old('availability', is_array($doctor->availability) ? implode(',', $doctor->availability) : $doctor->availability) }}">
+                                            <div id="availability-fields"></div>
+                                            <button type="button" class="btn btn-sm btn-outline-primary my-2" onclick="addAvailabilityField()">Add Day</button>
+                                            <input type="hidden" id="availability" name="availability" value="">
+                                            <div class="form-text">Set available days and times. Example: Monday: 8 AM - 3 PM</div>
                                         </div>
                                     </div>
                                 </div>
@@ -82,3 +85,77 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    // Parse initial value (from old input or DB)
+    let availability = {!! json_encode(old('availability', is_array($doctor->availability) ? $doctor->availability : (json_decode($doctor->availability, true) ?: []))) !!};
+
+    if (typeof availability === 'string') {
+        try {
+            availability = JSON.parse(availability);
+        } catch (e) {
+            availability = {};
+        }
+    }
+    if (!availability || typeof availability !== 'object') {
+        availability = {};
+    }
+
+    function renderAvailabilityFields() {
+        const container = document.getElementById('availability-fields');
+        container.innerHTML = '';
+        Object.entries(availability).forEach(([day, time], idx) => {
+            container.innerHTML += `
+                <div class="row mb-2 align-items-center" data-idx="${idx}">
+                    <div class="col-4">
+                        <input type="text" class="form-control" placeholder="Day" value="${day}" onchange="updateDay(${idx}, this.value)">
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control" placeholder="Time" value="${time}" onchange="updateTime(${idx}, this.value)">
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removeAvailabilityField(${idx})">&times;</button>
+                    </div>
+                </div>
+            `;
+        });
+        updateHiddenInput();
+    }
+
+    function addAvailabilityField() {
+        // Add a new empty day/time
+        availability[''] = '';
+        renderAvailabilityFields();
+    }
+
+    function updateDay(idx, value) {
+        const keys = Object.keys(availability);
+        const oldKey = keys[idx];
+        const val = availability[oldKey];
+        delete availability[oldKey];
+        availability[value] = val;
+        renderAvailabilityFields();
+    }
+
+    function updateTime(idx, value) {
+        const keys = Object.keys(availability);
+        const key = keys[idx];
+        availability[key] = value;
+        updateHiddenInput();
+    }
+
+    function removeAvailabilityField(idx) {
+        const keys = Object.keys(availability);
+        delete availability[keys[idx]];
+        renderAvailabilityFields();
+    }
+
+    function updateHiddenInput() {
+        document.getElementById('availability').value = JSON.stringify(availability);
+    }
+
+    // Initial render
+    document.addEventListener('DOMContentLoaded', renderAvailabilityFields);
+</script>
+@endpush

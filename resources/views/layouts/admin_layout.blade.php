@@ -48,6 +48,27 @@
     .availability-closed {
       color: #e91e63;
     }
+    .admin-image, .doctor-image {
+      cursor: pointer;
+      transition: transform 0.2s ease-in-out;
+    }
+    .admin-image:hover, .doctor-image:hover {
+      transform: scale(1.05);
+    }
+    .dropdown-menu {
+      border: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    .dropdown-item {
+      border-radius: 8px;
+      margin: 2px 8px;
+      transition: all 0.2s ease;
+    }
+    .dropdown-item:hover {
+      background-color: #f8f9fa;
+      transform: translateX(5px);
+    }
   </style>
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -179,11 +200,57 @@
                   </li>
                 </ul>
               </li>
-              <li class="nav-item d-flex align-items-center">
-                <a href="../pages/sign-in.html" class="nav-link text-body font-weight-bold px-0">
-                  <i class="material-symbols-rounded">account_circle</i>
+              <li class="nav-item dropdown pe-3 d-flex align-items-center">
+                <a href="javascript:;" class="nav-link text-body p-0" id="adminProfileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div>
+                    @if(Auth::user()->image != null)
+                      <img src="{{ asset("images/user/" . Auth::user()->image) }}" class="rounded-circle admin-image" style="width: 60px; height: 60px; align-items: center;" name="image" alt="{{ Auth::user()->username }}">
+                    @else
+                        <img src="{{ asset('images/user/user_default.png') }}" name="image" class="rounded-circle doctor-image" style="width: 60px; height: 60px; align-items: center;" alt="admin">
+                    @endif                      
+                  </div>
                 </a>
+                <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="adminProfileDropdown">
+                  <li class="mb-2">
+                    <a class="dropdown-item border-radius-md" href="{{ route('admin.profile') }}">
+                      <div class="d-flex py-1">
+                        <div class="my-auto">
+                          <i class="material-symbols-rounded text-primary">edit</i>
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="text-sm font-weight-normal mb-1">
+                            <span class="font-weight-bold">Edit Profile</span>
+                          </h6>
+                          <p class="text-xs text-secondary mb-0">
+                            Update your profile information
+                          </p>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item border-radius-md" href="{{ route('auth.logoutUser') }}" 
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      <div class="d-flex py-1">
+                        <div class="my-auto">
+                          <i class="material-symbols-rounded text-danger">logout</i>
+                        </div>
+                        <div class="d-flex flex-column justify-content-center">
+                          <h6 class="text-sm font-weight-normal mb-1">
+                            <span class="font-weight-bold">Logout</span>
+                          </h6>
+                          <p class="text-xs text-secondary mb-0">
+                            Sign out of your account
+                          </p>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
               </li>
+              <form id="logout-form" action="{{ route('auth.logoutUser') }}" method="POST" class="d-none">
+                @csrf
+              </form>
             </ul>
           </div>
         </div>

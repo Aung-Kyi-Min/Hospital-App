@@ -65,12 +65,15 @@
                   <td style="text-align: right; border: 1px solid #dee2e6;">{{ $doctor->experience }} yrs</td>
                   <td class="text-center" style="border: 1px solid #dee2e6;">
                     <a href="{{ route('admin.doctors.edit', $doctor->id) }}" class="text-success font-weight-bold text-xs pr-2" data-toggle="tooltip" data-original-title="Edit doctor">
-                      <i class="fa fa-edit fa-2x" style="margin-right: 7px;"></i>
+                      <i class="fa fa-edit fa-3x" style="margin-right: 7px;"></i>
                     </a>
-                    <a href="" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete doctor">
-                      <i class="fa fa-trash fa-2x"></i>
-                    </a>
-                    {{-- {{ route('admin.users.edit', $user->id) }} --}}
+                    <form action="{{ route('admin.doctors.delete', $doctor->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this doctor?');">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-link text-danger p-0 m-0 align-baseline" data-toggle="tooltip" data-original-title="Delete doctor">
+                        <i class="fa fa-trash fa-2x"></i>
+                      </button>
+                    </form>
                   </td>
                 </tr>
                 @endforeach

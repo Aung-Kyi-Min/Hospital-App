@@ -31,7 +31,8 @@ class User extends Authenticatable
         'phone',
         'gender',
         'blood_type',
-        'diseases'
+        'diseases',
+        'image'
     ];
 
     /**
