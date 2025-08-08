@@ -57,12 +57,6 @@
                     <span class="nav-link-text ms-1">Appointments</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark {{ request()->routeIs('admin.profile') ? 'active bg-gradient-dark text-dark' : 'text-dark' }}" href="{{route('admin.profile')}}">
-                    <i class="material-symbols-rounded opacity-5">person</i>
-                    <span class="nav-link-text ms-1">Profile</span>
-                </a>
-            </li>
         @elseif(Auth::guard('doctor')->check())
             <!-- Doctor Menu -->
             <li class="nav-item">
@@ -81,12 +75,6 @@
                 <a class="nav-link text-dark {{ request()->routeIs('doctor.patients') ? 'active bg-gradient-dark text-dark' : 'text-dark' }}" href="{{route('doctor.patients')}}">
                     <i class="material-symbols-rounded opacity-5">people</i>
                     <span class="nav-link-text ms-1">My Patients</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark {{ request()->routeIs('doctor.profile') ? 'active bg-gradient-dark text-dark' : 'text-dark' }}" href="{{route('doctor.profile')}}">
-                    <i class="material-symbols-rounded opacity-5">person</i>
-                    <span class="nav-link-text ms-1">Profile</span>
                 </a>
             </li>
         @endif

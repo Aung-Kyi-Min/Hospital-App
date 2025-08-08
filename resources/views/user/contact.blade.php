@@ -28,7 +28,7 @@
 						<div class="col-lg-6">
 							<div class="contact-us-left">
 								<!--Start Google-map -->
-								<div id="myMap"></div>
+								<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1892252728626!2d101.70425227346023!3d3.0439073972539825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc35b277a8750d%3A0x91efa0e70aa910db!2sPark%20One%20south!5e0!3m2!1sen!2smy!4v1754659088727!5m2!1sen!2smy" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 								<!--/End Google-map -->
 							</div>
 						</div>
@@ -66,7 +66,7 @@
 										</div>
 										<div class="col-12">
 											<div class="form-group login-btn">
-												<button class="btn" type="submit">Send</button>
+												<button class="btn btn-primary" type="submit">Send</button>
 											</div>
 											<div class="checkbox">
 												<label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox">Do you want to subscribe our Newsletter ?</label>

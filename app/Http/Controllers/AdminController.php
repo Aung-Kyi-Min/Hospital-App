@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use App\Contracts\Services\UserServiceInterface;
 use App\Http\Requests\AdminUserEditRequest;
 use App\Contracts\Services\DoctorServiceInterface;
@@ -231,5 +233,37 @@ class AdminController extends Controller
             Log::error('Admin profile update error: ' . $e->getMessage());
             return redirect()->back()->withInput()->with('error', 'There was an error updating your profile.');
         }
+    }
+
+    public function changePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+            'new_password_confirmation' => 'required'
+        ], [
+            'current_password.required' => 'Current password is required.',
+            'new_password.required' => 'New password is required.',
+            'new_password.min' => 'New password must be at least 8 characters.',
+            'new_password.confirmed' => 'Password confirmation does not match.',
+            'new_password_confirmation.required' => 'Password confirmation is required.'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $admin = auth('web')->user();
+
+        // Check if current password is correct
+        if (!Hash::check($request->current_password, $admin->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Current password is incorrect.'])->withInput();
+        }
+
+        // Update password
+        $admin->password = Hash::make($request->new_password);
+        $admin->save();
+
+        return redirect()->route('admin.profile')->with('success', 'Password changed successfully!');
     }
 }

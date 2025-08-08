@@ -84,6 +84,18 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
+                  <label class="form-control-label">Password</label>
+                  <input type="text" name="password" id="password" value="*************" readonly>
+                  <button type="button" class="btn btn-outline-primary btn-sm mt-2" data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+                    Change Password
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
                   <label for="current_image" class="form-control-label">Current Profile Image</label>
                   @if($admin->image)
                     <div class="mt-2">
@@ -145,6 +157,48 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Change Password Modal -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form action="{{ route('admin.change_password') }}" method="POST">
+        @csrf
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="current_password" class="form-label">Current Password</label>
+            <input type="password" class="form-control @error('current_password') is-invalid @enderror" id="current_password" name="current_password" required>
+            @error('current_password')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="new_password" class="form-label">New Password</label>
+            <input type="password" class="form-control @error('new_password') is-invalid @enderror" id="new_password" name="new_password" required>
+            @error('new_password')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="new_password_confirmation" class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control @error('new_password_confirmation') is-invalid @enderror" id="new_password_confirmation" name="new_password_confirmation" required>
+            @error('new_password_confirmation')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Change Password</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

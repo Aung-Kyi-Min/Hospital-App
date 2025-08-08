@@ -48,6 +48,7 @@ Route::prefix('/admin')->middleware(['auth:web', \App\Http\Middleware\CheckRole:
     // Admin Profile Route
     Route::get('/profile', [AdminController::class, 'profile'])->name('admin.profile');
     Route::put('/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+    Route::post('/change-password', [AdminController::class, 'changePassword'])->name('admin.change_password');
     // Admin Appointment Routes
     Route::get('/appointments/{appointment}/show', [AppointmentController::class, 'show'])->name('appointments.show');
     Route::post('/appointments/{appointment}/update-status', [AppointmentController::class, 'updateStatus'])
